@@ -71,7 +71,7 @@ verify_artifact_pip_sigstore_version: 1.1.2 # Specific version to install. (Defa
 ```yaml
 - hosts: localhost
   tasks:
-  - name: Verify the foo.tar.gz artifact using sigstore and fail if it doesn't pass verification
+  - name: Verify the foo.tar.gz artifact using Sigstore and fail if it doesn't pass verification
     ansible.builtin.include_role:
       name: smallstep.sigstore.verify_artifact
     vars:
