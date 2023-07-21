@@ -1,6 +1,12 @@
 name: Python Black
 
-on: [push, pull_request]
+on:
+  push:
+    tags-ignore:
+    - 'v*'
+    branches:
+    - "master"
+  pull_request:
 
 jobs:
   python-black:
