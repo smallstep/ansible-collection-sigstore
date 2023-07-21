@@ -45,9 +45,9 @@
 - assert:
     that:
       - sigstore_verify_ascii_pem is success
-      - sigstore_verify_ascii_pem.verification_status
+      - "sigstore_verify_ascii_pem.verification_status == 'True'"
       - sigstore_verify_base64_pem is success
-      - sigstore_verify_base64_pem.verification_status
+      - "sigstore_verify_base64_pem.verification_status == 'True'"
       - sigstore_verify_bad_sig is success
       - "sigstore_verify_bad_sig.verification_status == 'False'"
       - "sigstore_verify_bad_sig.verification_failure_reason == 'Signature is invalid for input'"
