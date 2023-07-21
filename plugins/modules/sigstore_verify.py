@@ -123,7 +123,7 @@ else:
 
 class AnsibleSigstoreVerify(Sigstore):
     def __init__(self, module):
-        Sigstore.__init__(self, module, "sigstore_verify")
+        super().__init__(module, "sigstore_verify")
         self.sigstore_verify = None
 
     def verify_artifact(self) -> list:
@@ -137,13 +137,7 @@ class AnsibleSigstoreVerify(Sigstore):
             ]
         )
 
-        params = {
-            "file": self.module.params.get("file"),
-            "certificate": self.module.params.get("certificate"),
-            "signature": self.module.params.get("signature"),
-            "cert_identity": self.module.params.get("cert_identity"),
-            "cert_oidc_issuer": self.module.params.get("cert_oidc_issuer"),
-        }
+        params = self.module.params
 
         try:
             # The artifact to verify
@@ -158,8 +152,7 @@ class AnsibleSigstoreVerify(Sigstore):
             with artifact.open("rb") as a, cert.open("r") as c, signature.open("rb") as s:
                 try:
                     cert_data = c.read()
-                    cert_data_b64decode = base64.b64decode(cert_data, validate=True)
-                    cert_data_processed = cert_data_b64decode.decode("utf-8")
+                    cert_data_processed = base64.b64decode(cert_data, validate=True).decode("utf-8")
                 except binascii.Error:
                     cert_data_processed = cert_data
                 materials = VerificationMaterials(
@@ -180,7 +173,7 @@ class AnsibleSigstoreVerify(Sigstore):
             results = params
             if file_status.success:
                 results["verification_status"] = to_native(True)
-            elif not file_status.success:
+            else:
                 results["verification_status"] = to_native(False)
                 results["verification_failure_reason"] = to_native(file_status.reason)
 
