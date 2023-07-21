@@ -16,15 +16,3 @@ class Sigstore:
     @staticmethod
     def default_module_arguments():
         return {}
-
-    def _gather_result(self) -> dict:
-        """Gather all of the result for every module
-
-        :return: dict
-        """
-        return {}
-
-    def get_result(self):
-        if getattr(self, self.represent) is not None:
-            self.result[self.represent] = self._gather_result()
-        return self.result

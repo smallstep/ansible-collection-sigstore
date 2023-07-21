@@ -61,7 +61,7 @@ verify_artifact_certificate: /path/to/artifact.tar.gz.pem # Has to be full path 
 verify_artifact_signature: /path/to/artifact.tar.gz.sig # Has to be full path to the archive signature file (Required)
 verify_artifact_cert_identity: user@example.com # The identity to check for in the certificate's Subject Alternative Name (Required)
 verify_artifact_cert_oidc_issuer: https://oidc.example.com # The OIDC issuer URL to check for in the certificate's OIDC issuer extension (Required)
-verify_artifact_fail_run: True # If set to False it will fail the playbook run (Defaults to True)
+verify_artifact_fail_run: True # If set to False it will _not_ fail the playbook run if verification fails (Defaults to True)
 verify_artifact_pip_sigstore_install: True # Ensure the pip sigstore package is installed (Defaults to True)
 verify_artifact_pip_sigstore_version: 1.1.2 # Specific version to install. (Defaults to 1.1.2)
 ```
@@ -71,7 +71,7 @@ verify_artifact_pip_sigstore_version: 1.1.2 # Specific version to install. (Defa
 ```yaml
 - hosts: localhost
   tasks:
-  - name: Verify the foo.tar.gz artifact using sigstore and fail if it doesn't pass verification
+  - name: Verify the foo.tar.gz artifact using Sigstore and fail if it doesn't pass verification
     ansible.builtin.include_role:
       name: smallstep.sigstore.verify_artifact
     vars:
