@@ -1,0 +1,38 @@
+galaxy_info:
+  author: Smallstep Engineering <techadmin@smallstep.com>
+  description: Install step CLI
+  company: Smallstep Labs, Inc.
+
+  license: Apache-2.0
+
+  min_ansible_version: 2.10
+
+  platforms:
+  - name: Fedora
+    versions:
+    - 37
+    - 38
+    - 39
+    - rawhide
+  - name: EL
+    versions:
+      - 7
+      - 8
+      - 9
+  - name: Debian
+    versions:
+      - 10
+      - 11
+      - 12
+  - name: Ubuntu
+    versions:
+      - 18.04.6
+      - 22.04.2
+      - 20.04.6
+  - name: Archlinux
+    versions:
+      - all
+
+  galaxy_tags: [cosign, sigstore, sigstore-python, smallstep]
+
+dependencies: []

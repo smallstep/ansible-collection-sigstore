@@ -1,0 +1,5 @@
+---
+# defaults file for verify_artifact
+verify_artifact_fail_run: True
+verify_artifact_pip_sigstore_install: True
+verify_artifact_pip_sigstore_version: 1.1.2

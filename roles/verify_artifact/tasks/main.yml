@@ -1,0 +1,20 @@
+---
+# tasks file for verify_artifact
+- name: Install sigstore via pip
+  ansible.builtin.pip:
+    name: "sigstore=={{ verify_artifact_pip_sigstore_version }}"
+  when: verify_artifact_pip_sigstore_install
+
+- name: Verify an artifact with Sigstore
+  smallstep.sigstore.sigstore_verify:
+    file: "{{ verify_artifact_file }}"
+    certificate: "{{ verify_artifact_certificate }}"
+    signature: "{{ verify_artifact_signature }}"
+    cert_identity: "{{ verify_artifact_cert_identity }}"
+    cert_oidc_issuer: "{{ verify_artifact_cert_oidc_issuer }}"
+  register: sigstore_verify_results
+
+- name: Fail the run if file verification fails
+  ansible.builtin.fail:
+    msg: "The verification of {{ verify_artifact_file }} via Sigstore has failed! Reason: {{ sigstore_verify_results.verification_failure_reason }}"
+  when: verify_artifact_fail_run and not sigstore_verify_results.verification_status

@@ -1,0 +1,53 @@
+---
+- name: Install sigstore
+  ansible.builtin.pip:
+    name: sigstore
+
+- name: Verify an artifact with Sigstore with an ASCII PEM file
+  smallstep.sigstore.sigstore_verify:
+    file: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt"
+    certificate: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.pem"
+    signature: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.sig"
+    cert_identity: https://github.com/smallstep/cli/.github/workflows/release.yml@refs/tags/v0.24.4
+    cert_oidc_issuer: https://token.actions.githubusercontent.com
+  register: sigstore_verify_ascii_pem
+
+- name: Print verify an artifact with Sigstore with an ASCII PEM file results
+  debug:
+    var: sigstore_verify_ascii_pem
+
+- name: Verify an artifact with Sigstore with a base64 encoded PEM file
+  smallstep.sigstore.sigstore_verify:
+    file: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt"
+    certificate: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.pem.b64"
+    signature: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.sig"
+    cert_identity: https://github.com/smallstep/cli/.github/workflows/release.yml@refs/tags/v0.24.4
+    cert_oidc_issuer: https://token.actions.githubusercontent.com
+  register: sigstore_verify_base64_pem
+
+- name: Print verify an artifact with Sigstore with a base64 encoded PEM file results
+  debug:
+    var: sigstore_verify_base64_pem
+
+- name: Verify an artifact with Sigstore with a bad signature file
+  smallstep.sigstore.sigstore_verify:
+    file: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt"
+    certificate: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.pem"
+    signature: "{{ playbook_dir }}/targets/sigstore_verify/files/checksums.txt.sig.bad"
+    cert_identity: https://github.com/smallstep/cli/.github/workflows/release.yml@refs/tags/v0.24.4
+    cert_oidc_issuer: https://token.actions.githubusercontent.com
+  register: sigstore_verify_bad_sig
+
+- name: Print verify an artifact with Sigstore with a bad signature file results
+  debug:
+    var: sigstore_verify_bad_sig
+
+- assert:
+    that:
+      - sigstore_verify_ascii_pem is success
+      - sigstore_verify_ascii_pem.verification_status
+      - sigstore_verify_base64_pem is success
+      - sigstore_verify_base64_pem.verification_status
+      - sigstore_verify_bad_sig is success
+      - "sigstore_verify_bad_sig.verification_status == 'False'"
+      - "sigstore_verify_bad_sig.verification_failure_reason == 'Signature is invalid for input'"

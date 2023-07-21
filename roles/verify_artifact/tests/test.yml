@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Verify the foo.tar.gz artifact using Sigstore and fail if it doesn't pass verification
+    ansible.builtin.include_role:
+      name: smallstep.sigstore.verify_artifact
+    vars:
+      verify_artifact_file: /path/to/foo.tar.gz
+      verify_artifact_certificate: /path/to/foo.tar.gz.pem
+      verify_artifact_signature: /path/to/foo.tar.gz.sig
+      verify_artifact_cert_identity: user@example.com
+      verify_artifact_cert_oidc_issuer: https://oidc.example.com
+      verify_artifact_fail_run: True
+      verify_artifact_pip_sigstore_install: True
+      verify_artifact_pip_sigstore_version: 1.1.2
