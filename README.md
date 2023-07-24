@@ -1,6 +1,6 @@
 # Ansible Collection - smallstep.sigstore
 
-This is collection provides the `smallstep.sigstore.sigstore_verify` module which requires the [sigstore](https://github.com/sigstore/sigstore-python) python package. This module can be used verify the signature on an artifact that was signed by [Sigstore](https://www.sigstore.dev/). It also provides the `smallstep.sigstore.verify_artifact` role which can be included in playbooks to verify the Sigstore signature on an aritifact and it can ensure that [sigstore](https://github.com/sigstore/sigstore-python) python package is installed and it can be configured to fail the playbook run if the verification of the signature fails.
+This is collection provides the `smallstep.sigstore.sigstore_verify` module which requires the [sigstore](https://github.com/sigstore/sigstore-python) python package. This module can be used verify the signature on an artifact that was signed by [Sigstore](https://www.sigstore.dev/). It also provides the `smallstep.sigstore.verify_artifact` role which can be included in playbooks to verify the Sigstore signature on an artifact and it can ensure that [sigstore](https://github.com/sigstore/sigstore-python) python package is installed and it can be configured to fail the playbook run if the verification of the signature fails.
 
 ## Requirements
 
