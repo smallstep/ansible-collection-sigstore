@@ -4,8 +4,10 @@ This is a role that uses the `smallstep.sigstore.sigstore_verify` module from th
 
 ## Requirements
 
-* `ansible-galaxy collection install smallstep.sigstore` (on control node)
-* `pip install sigstore` (on servers)
+* `ansible-galaxy collection install smallstep.sigstore` on control node
+* Python 3.8 or greater on servers
+* `pip` installed on servers
+* `pip install sigstore` on servers
 
 ## Role Variables
 
