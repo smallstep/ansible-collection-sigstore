@@ -98,20 +98,19 @@ sigstore_verify:
             sample: True
 """
 
-from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.basic import missing_required_lib
-from ansible.module_utils.common.text.converters import to_native
-from ansible_collections.smallstep.sigstore.plugins.module_utils.sigstore import (
+import base64  # noqa: E402
+import binascii  # noqa: E402
+import traceback  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+from ansible.module_utils.basic import AnsibleModule, missing_required_lib  # noqa: E402
+from ansible.module_utils.common.text.converters import to_native  # noqa: E402
+from ansible_collections.smallstep.sigstore.plugins.module_utils.sigstore import (  # noqa: E402
     Sigstore,
 )
 
-import base64
-import binascii
-import traceback
-from pathlib import Path
-
 try:
-    from sigstore.verify import Verifier, VerificationMaterials
+    from sigstore.verify import VerificationMaterials, Verifier
     from sigstore.verify.policy import Identity
 except ImportError:
     HAS_SIGSTORE = False
@@ -149,10 +148,14 @@ class AnsibleSigstoreVerify(Sigstore):
             # The signature to verify
             signature = Path(params["signature"])
 
-            with artifact.open("rb") as a, cert.open("r") as c, signature.open("rb") as s:
+            with artifact.open("rb") as a, cert.open("r") as c, signature.open(
+                "rb"
+            ) as s:
                 try:
                     cert_data = c.read()
-                    cert_data_processed = base64.b64decode(cert_data, validate=True).decode("utf-8")
+                    cert_data_processed = base64.b64decode(
+                        cert_data, validate=True
+                    ).decode("utf-8")
                 except binascii.Error:
                     cert_data_processed = cert_data
                 materials = VerificationMaterials(
@@ -209,7 +212,9 @@ class AnsibleSigstoreVerify(Sigstore):
 def main():
     module = AnsibleSigstoreVerify.define_module()
     if not HAS_SIGSTORE:
-        module.fail_json(msg=missing_required_lib("sigstore"), exception=SIGSTORE_IMPORT_ERROR)
+        module.fail_json(
+            msg=missing_required_lib("sigstore"), exception=SIGSTORE_IMPORT_ERROR
+        )
 
     sigstore = AnsibleSigstoreVerify(module)
 

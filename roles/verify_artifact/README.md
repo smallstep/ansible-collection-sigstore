@@ -19,7 +19,7 @@ verify_artifact_cert_identity: user@example.com # The identity to check for in t
 verify_artifact_cert_oidc_issuer: https://oidc.example.com # The OIDC issuer URL to check for in the certificate's OIDC issuer extension (Required)
 verify_artifact_fail_run: True # If set to False it will _not_ fail the playbook run if verification fails (Defaults to True)
 verify_artifact_pip_sigstore_install: True # Ensure the pip sigstore package is installed (Defaults to True)
-verify_artifact_pip_sigstore_version: 1.1.2 # Specific version to install. (Defaults to 1.1.2)
+verify_artifact_pip_sigstore_version: 2.0.1 # Specific version to install. (Defaults to 2.0.1)
 ```
 
 ## Example Playbook
@@ -40,7 +40,7 @@ Here is how you can include this role in your playbook to verify an archive with
       verify_artifact_cert_oidc_issuer: https://oidc.example.com
       verify_artifact_fail_run: True
       verify_artifact_pip_sigstore_install: True
-      verify_artifact_pip_sigstore_version: 1.1.2
+      verify_artifact_pip_sigstore_version: 2.0.1
 ```
 
 ## Author Information
@@ -50,6 +50,6 @@ Smallstep Engineering
 
 ## License
 
-[Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0>)
+[Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Copyright 2023 Smallstep Labs Inc.
