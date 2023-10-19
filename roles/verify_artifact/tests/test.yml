@@ -12,4 +12,4 @@
       verify_artifact_cert_oidc_issuer: https://oidc.example.com
       verify_artifact_fail_run: True
       verify_artifact_pip_sigstore_install: True
-      verify_artifact_pip_sigstore_version: 1.1.2
+      verify_artifact_pip_sigstore_version: 2.0.1
