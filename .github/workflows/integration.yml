@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Clone the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: ansible_collections/smallstep/sigstore
 
