@@ -7,8 +7,6 @@ authors:
   - Joe Doss @jdoss
   - Smallstep Engineering
 description: Verify artifacts with Sigstore
-license:
-  - Apache-2.0
 license_file: 'LICENSE'
 tags:
   - sigstore
